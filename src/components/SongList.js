@@ -1,8 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectSong } from "../actions/index";
 
-const SongList = ({ songs, selectSong }) => {
+const SongList = () => {
+  const dispatch = useDispatch();
+  const songs = useSelector((state) => state.songs)
   const renderList = () => {
     return songs.map((song) => {
       return (
@@ -10,7 +12,7 @@ const SongList = ({ songs, selectSong }) => {
           <div className="right floated content">
             <button
               className="ui button primary"
-              onClick={() => selectSong(song)}
+              onClick={() => dispatch(selectSong(song))}
             >
               Select
             </button>
@@ -23,12 +25,7 @@ const SongList = ({ songs, selectSong }) => {
 
   return <div className="ui divided list">{renderList()}</div>;
 };
+//we get our store's song
 
-const mapStateToProps = (state) => {
-  const { songs } = state;
-  return { songs };
-};
-//we get our store's songs
-
-export default connect(mapStateToProps, { selectSong })(SongList);
+export default SongList;
 //we convert our state's songs value to prop
